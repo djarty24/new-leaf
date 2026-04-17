@@ -13,12 +13,10 @@ export default function Layout() {
 
     return (
         <div className="min-h-screen bg-neutral-50 text-neutral-900 font-sans">
-            {/* Main Content Area */}
             <main className="pb-24 pt-8 px-4 max-w-md mx-auto">
                 <Outlet />
             </main>
 
-            {/* Frosted Glass Bottom Navigation */}
             <nav className="fixed bottom-0 w-full backdrop-blur-xl bg-white/70 border-t border-neutral-200 shadow-[0_-4px_30px_rgba(0,0,0,0.03)]">
                 <div className="max-w-md mx-auto flex justify-between items-center px-6 py-4">
                     {navItems.map((item) => {
@@ -29,7 +27,7 @@ export default function Layout() {
                             <Link
                                 key={item.path}
                                 to={item.path}
-                                className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isActive ? "text-emerald-700 scale-110" : "text-neutral-500 hover:text-emerald-600"
+                                className={`flex flex-col items-center gap-1.5 transition-all duration-300 ${isActive ? "text-app-green scale-110" : "text-neutral-400 hover:text-app-green/70"
                                     }`}
                             >
                                 <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
@@ -43,5 +41,6 @@ export default function Layout() {
             </nav>
         </div>
     );
+
 
 }
