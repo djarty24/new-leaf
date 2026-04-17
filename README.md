@@ -49,7 +49,9 @@ This is an hour by hour log of everything I worked on and when each feature was 
 7. Finished `Education.tsx` page and Learn tab
     * Added fields for article author and date written
     * Medical disclaimer (specifically for HHS TUPE)
-    
+    * Switched from manual Markdown rendering to automatically overriding Tailwind styles
+    * Added 5 educationa articles on a variety of health-related topics
+
 
 ---
 <div align="center">
