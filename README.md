@@ -42,6 +42,14 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * A toggle system allowing users to filter the feed
     * Designed an inline post-creation tool at the top of the feed
     * ADD LATER: probably need some sort of moderation system to make sure people can't make inappropriate comments
+6. Began working on `Education.tsx`
+    * Created an article layout for different educational articles
+    * May switch to a database
+    * Began integrating Markdown so that articles render nicely
+7. Finished `Education.tsx` page and Learn tab
+    * Added fields for article author and date written
+    * Medical disclaimer (specifically for HHS TUPE)
+    
 
 ---
 <div align="center">
