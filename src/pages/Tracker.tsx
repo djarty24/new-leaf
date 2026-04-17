@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Wind, AlertCircle, CheckCircle2, X, Plus, Minus, ChevronLeft, ChevronRight, Clock, Activity } from "lucide-react";
 
 // Types
@@ -64,9 +64,8 @@ const generateInitialHistory = () => {
     const dateKey = formatDateKey(pastDate);
     const daysAgo = today.getDate() - i;
 
-    // Inject rich, specific demo data for 2 days ago and 4 days ago
     if (daysAgo === 2 || daysAgo === 4) {
-      const isBadDay = daysAgo === 2; // Make 2 days ago a heavier usage day
+      const isBadDay = daysAgo === 2; 
       
       const time1 = new Date(pastDate); time1.setHours(9, 15);
       const time2 = new Date(pastDate); time2.setHours(14, 30);
@@ -82,9 +81,8 @@ const generateInitialHistory = () => {
         ]
       };
     } else {
-      // Background noise generic data for other past days
       const vapes = Math.random() > 0.8 ? 1 : 0;
-      const cravings = Math.floor(Math.random() * 2); // 0 or 1
+      const cravings = Math.floor(Math.random() * 2);
       const logs: LogEntry[] = [];
       
       if (cravings > 0 || vapes > 0) {
@@ -116,13 +114,56 @@ export default function Tracker() {
   const [popupDate, setPopupDate] = useState<Date | null>(null);
   const [viewingTimelineDate, setViewingTimelineDate] = useState<Date | null>(null);
 
-  // Time boundaries for future-blocking
+  // Breathing Sequence State
+  const [breathePhase, setBreathePhase] = useState<"start" | "inhale" | "hold" | "exhale">("start");
+  const [timeLeft, setTimeLeft] = useState(3);
+
   const realToday = new Date();
-  realToday.setHours(0, 0, 0, 0); // Strip time for pure day-to-day comparison
+  realToday.setHours(0, 0, 0, 0); 
   
   const isViewingCurrentMonth = 
     viewMonth.getFullYear() === realToday.getFullYear() && 
     viewMonth.getMonth() === realToday.getMonth();
+
+  // Breathing Sequencer using window.setInterval to fix TypeScript NodeJS error
+  useEffect(() => {
+    if (!isSurging) {
+      setBreathePhase("start");
+      return;
+    }
+
+    let tick = 0;
+    setBreathePhase("start");
+    setTimeLeft(1); // 1-second get ready phase to mount circle at scale-100
+
+    const interval = window.setInterval(() => {
+      tick++;
+      
+      // The 4-2-4 cycle mapped to seconds
+      if (tick === 1) {
+        setBreathePhase("inhale");
+        setTimeLeft(4);
+      } else if (tick > 1 && tick < 5) {
+        setTimeLeft(5 - tick);
+      } else if (tick === 5) {
+        setBreathePhase("hold");
+        setTimeLeft(2);
+      } else if (tick === 6) {
+        setTimeLeft(1);
+      } else if (tick === 7) {
+        setBreathePhase("exhale");
+        setTimeLeft(4);
+      } else if (tick > 7 && tick < 11) {
+        setTimeLeft(11 - tick);
+      } else if (tick === 11) {
+        tick = 1; // Reset cycle
+        setBreathePhase("inhale");
+        setTimeLeft(4);
+      }
+    }, 1000);
+
+    return () => window.clearInterval(interval);
+  }, [isSurging]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) => prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]);
@@ -185,9 +226,7 @@ export default function Tracker() {
 
   const handlePrevMonth = () => setViewMonth(new Date(year, month - 1, 1));
   const handleNextMonth = () => {
-    if (!isViewingCurrentMonth) {
-      setViewMonth(new Date(year, month + 1, 1));
-    }
+    if (!isViewingCurrentMonth) setViewMonth(new Date(year, month + 1, 1));
   };
 
   const selectedDateKey = formatDateKey(selectedDate);
@@ -195,19 +234,42 @@ export default function Tracker() {
   const isTodaySelected = formatDateKey(realToday) === selectedDateKey;
 
   if (isSurging) {
+    const phaseConfig = {
+      start: { text: "Get ready", circleClass: "scale-100" },
+      inhale: { text: "Breathe in", circleClass: "scale-[1.75] transition-transform duration-[4000ms] ease-out" },
+      hold: { text: "Hold", circleClass: "scale-[1.75] transition-transform duration-[2000ms] ease-in-out" },
+      exhale: { text: "Breathe out", circleClass: "scale-100 transition-transform duration-[4000ms] ease-in-out" }
+    };
+
     return (
-      <div className="flex flex-col items-center justify-center h-[70vh] space-y-8 animate-in fade-in duration-500">
-        <h2 className="font-display text-3xl text-app-purple">Breathe with the circle</h2>
-        <div className="w-48 h-48 rounded-full bg-app-pink/20 border-4 border-app-pink flex items-center justify-center animate-pulse">
-          <Wind size={48} className="text-app-pink" />
+      <div className="flex flex-col items-center justify-center h-[70vh] space-y-12 animate-in fade-in duration-500 overflow-hidden">
+        
+        <div className="h-24 flex flex-col items-center justify-center space-y-2">
+          <h2 
+            key={breathePhase} 
+            className="font-display text-4xl text-app-purple animate-in fade-in slide-in-from-bottom-2 duration-500"
+          >
+            {phaseConfig[breathePhase].text}
+          </h2>
+          <p className="text-3xl font-medium text-neutral-400 font-sans tabular-nums animate-in fade-in duration-300">
+            {breathePhase !== "start" ? timeLeft : "..."}
+          </p>
         </div>
-        <button onClick={() => setIsSurging(false)} className="mt-8 px-6 py-2 bg-neutral-200 text-neutral-700 rounded-full font-medium">
+        
+        <div className="relative flex items-center justify-center w-64 h-64">
+          <div className={`absolute w-32 h-32 rounded-full bg-app-pink/20 border-4 border-app-pink flex items-center justify-center ${phaseConfig[breathePhase].circleClass}`}>
+            <Wind size={32} className={`text-app-pink ${breathePhase === "start" ? "animate-pulse" : ""}`} />
+          </div>
+        </div>
+
+        <button onClick={() => setIsSurging(false)} className="mt-8 px-8 py-3 bg-neutral-900 text-white shadow-xl rounded-full font-medium z-10 transition-colors active:scale-95">
           I'm feeling better
         </button>
       </div>
     );
   }
 
+  // Render Tracker View
   return (
     <div className="space-y-6 relative">
       <div><h1 className="font-display text-3xl text-neutral-800">New Leaf</h1></div>
@@ -236,11 +298,7 @@ export default function Tracker() {
             <button 
               onClick={handleNextMonth} 
               disabled={isViewingCurrentMonth}
-              className={`p-1.5 rounded-lg shadow-sm transition-colors border ${
-                isViewingCurrentMonth 
-                  ? "bg-neutral-50 border-transparent text-neutral-300 cursor-not-allowed" 
-                  : "bg-white border-neutral-100 text-neutral-500 hover:text-neutral-800"
-              }`}
+              className={`p-1.5 rounded-lg shadow-sm transition-colors border ${isViewingCurrentMonth ? "bg-neutral-50 border-transparent text-neutral-300 cursor-not-allowed" : "bg-white border-neutral-100 text-neutral-500 hover:text-neutral-800"}`}
             >
               <ChevronRight size={18} />
             </button>
@@ -263,12 +321,7 @@ export default function Tracker() {
             const isFuture = loopDate.getTime() > realToday.getTime();
 
             return (
-              <button 
-                key={dayNum} 
-                onClick={() => !isFuture && setPopupDate(loopDate)} 
-                disabled={isFuture}
-                className={`flex items-center justify-center aspect-square transition-all ${isFuture ? "opacity-30 cursor-not-allowed grayscale" : ""}`}
-              >
+              <button key={dayNum} onClick={() => !isFuture && setPopupDate(loopDate)} disabled={isFuture} className={`flex items-center justify-center aspect-square transition-all ${isFuture ? "opacity-30 cursor-not-allowed grayscale" : ""}`}>
                 <div className={`w-full h-full rounded-full flex items-center justify-center p-0.5 transition-all ${getVapeRingClass(stats.vapes, isFuture)} ${isActiveDay && !isFuture ? "ring-2 ring-neutral-400 ring-offset-1" : ""}`}>
                   <div className={`w-full h-full rounded-full flex items-center justify-center transition-all ${getCravingRingClass(stats.cravings, isFuture)}`}>
                     <span className={`text-xs font-medium ${isFuture ? 'text-neutral-400' : stats.cravings >= 3 ? 'text-yellow-950' : 'text-neutral-700'}`}>{dayNum}</span>
@@ -286,6 +339,7 @@ export default function Tracker() {
         </div>
       </div>
 
+      {/* Day Stats Popup Modal */}
       {popupDate !== null && (
         <div className="fixed inset-0 z-40 flex items-center justify-center p-4 bg-neutral-900/20 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white/90 backdrop-blur-xl rounded-3xl p-6 w-full max-w-sm shadow-xl animate-in zoom-in-95 duration-200">
@@ -323,6 +377,7 @@ export default function Tracker() {
         </div>
       )}
 
+      {/* Daily Timeline Modal */}
       {viewingTimelineDate !== null && (
         <div className="fixed inset-0 z-40 bg-neutral-50 overflow-y-auto pb-24 animate-in slide-in-from-bottom-full duration-300">
           <div className="max-w-md mx-auto p-4 pt-12 space-y-6">
@@ -381,6 +436,7 @@ export default function Tracker() {
         </div>
       )}
 
+      {/* Log a Craving Form Modal */}
       {isLogging && (
         <div className="fixed inset-0 z-40 bg-neutral-50 overflow-y-auto pb-24 animate-in slide-in-from-bottom-full duration-300">
           <div className="max-w-md mx-auto p-4 space-y-8 pt-12">
@@ -439,5 +495,4 @@ export default function Tracker() {
       )}
     </div>
   );
-
 }

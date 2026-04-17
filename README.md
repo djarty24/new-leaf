@@ -32,6 +32,10 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * Created a calendar to show a summary of past logs. The colored rings indicate the intensity of cravings and the number of times the user vaped
     * Created a method to log a current craving, with spaces for emotions, intensity, and time of day
     * Added a quick-access button that triggers a breathing visualizer to help users navigate intense, in-the-moment cravings
+4. Finalized `Tracker.tsx` and finished Journals tab
+    * Added dropdown menu with reflective prompts to allow users to cycle through a curated list of non-clinical questions
+    * Created a color-coded mood selector (Calm, Steady, Sensitive, Reflective) to note down alongside journal entries
+    * As of now, created "demo" entries to showcase the vieweing feature (WIP - will later add them to a database)
 
 ---
 <div align="center">
