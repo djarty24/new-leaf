@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:opsz,wght@14..32,100..900&display=swap');
+
+@import "tailwindcss";
+
+/* color palette = salmon, purple, green, pastel yellow accents + white and gray */
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Fraunces", serif;
+}
