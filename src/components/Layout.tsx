@@ -7,7 +7,7 @@ export default function Layout() {
     const navItems = [
         { path: "/", label: "Today", icon: Home },
         { path: "/journal", label: "Journal", icon: BookOpen },
-        { path: "/forum", label: "Forum", icon: Users },
+        { path: "/forum", label: "Community", icon: Users },
         { path: "/education", label: "Learn", icon: Sparkles },
     ];
 
@@ -17,7 +17,7 @@ export default function Layout() {
                 <Outlet />
             </main>
 
-            <nav className="fixed bottom-0 w-full backdrop-blur-xl bg-white/70 border-t border-neutral-200 shadow-[0_-4px_30px_rgba(0,0,0,0.03)]">
+            <nav className="fixed bottom-0 z-50 w-full backdrop-blur-xl bg-white/70 border-t border-neutral-200 shadow-[0_-4px_30px_rgba(0,0,0,0.03)]">
                 <div className="max-w-md mx-auto flex justify-between items-center px-6 py-4">
                     {navItems.map((item) => {
                         const isActive = location.pathname === item.path;

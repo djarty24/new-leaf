@@ -28,8 +28,10 @@ This is an hour by hour log of everything I worked on and when each feature was 
         - Shadcn CLI failed to locate the `@/*` path alias. Modern Vite setups split TypeScript configuration across multiple files (`tsconfig.app.json` and `tsconfig.json`)
         - Fixed the alias issue took a long time to pinpoint and resolve but eventually, by explicitly defining `baseUrl: "."` and the `paths` object in the root `tsconfig.json` the imports went through!
     * Selected a color palette and added that to styles(WIP)
-3. 
-
+3. Worked on the cravings tracker page
+    * Created a calendar to show a summary of past logs. The colored rings indicate the intensity of cravings and the number of times the user vaped
+    * Created a method to log a current craving, with spaces for emotions, intensity, and time of day
+    * Added a quick-access button that triggers a breathing visualizer to help users navigate intense, in-the-moment cravings
 
 ---
 <div align="center">
