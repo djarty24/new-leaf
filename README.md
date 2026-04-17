@@ -36,6 +36,12 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * Added dropdown menu with reflective prompts to allow users to cycle through a curated list of non-clinical questions
     * Created a color-coded mood selector (Calm, Steady, Sensitive, Reflective) to note down alongside journal entries
     * As of now, created "demo" entries to showcase the vieweing feature (WIP - will later add them to a database)
+5. Finalized `Forum.tsx` which is an anonymous community forum network to combat the isolation of recovery
+    * Added a community board free of usernames and profiles to encourage genuine sharing
+    * Users can expand any post to view comment threads and comment their own encouraging replies
+    * A toggle system allowing users to filter the feed
+    * Designed an inline post-creation tool at the top of the feed
+    * ADD LATER: probably need some sort of moderation system to make sure people can't make inappropriate comments
 
 ---
 <div align="center">
