@@ -3,14 +3,54 @@
 A community-focused tracker and support space for teens navigating the process of quitting tobacco usage and vaping. Originally created for my high school's TUPE committee's Take Down Tobacco Multimedia Competition as well as Hack Club's Sleepover event.
 
 ## Features
-* fill this in later
+**Daily Tracker and Calendar**
+* Log specific cravings, including intensity and situational triggers.
+* View daily patterns and craving frequency on a color-coded visual calendar.
+
+**Growth Engine**
+* Track overall recovery progress through a growing digital plant!
+    * Milestones are based on total cravings resisted rather than consecutive days
+    * Progress pauses during a slip-up instead of resetting to zero
+* Breathing Exercises
+    * Access immediate calming exercises during intense cravings
+    * Follow animated 4-2-4 and box breathing timers
+    * Type out worries into a visual release tool that clears them from the screen
+    * Complete a guided 5-4-3-2-1 sensory countdown
+    * Use a tactile anchor tool that requires a continuous 10-second screen hold to focus the hands and mind
+* Guided Journal Entries
+    * Log daily entries starting with a color-coded mood selection
+    * Answer optional writing prompts focused on positive reflection and habit building
+    * Review past entries in a chronological history feed
+* Anonymous Community Forum
+    * Post and read community notes without usernames or profiles
+    * Filter the main feed by specific categories like wins, struggles, or tips from other users
+    * Interact with others using a single Send Support button
+    * Read and reply to specific posts and comments through nested threads
+* Educational Library (Learn tab)
+    * Read formatted articles about the neuroscience of addiction
+    * Learn evidence-based coping strategies and habit replacement techniques
 
 ## Tech Stack
 
 React, vite, typescript, tailwindcss, shadcn, etc.
 
 ## Installation Guide
-* fill this in later
+Follow these steps to run the project locally on your machine.
+
+1. Clone the repository
+```bash
+git clone [https://github.com/djarty24/new-leaf.git](https://github.com/djarty24/new-leaf.git)
+```
+
+2. Open the directory and install dependencies
+```bash
+cd new-leaf
+npm install
+npm run dev
+```
+
+3. View the app by navigating to the local host link provided in your terminal (usually http://localhost:5173).
+
 
 ## Developer Log (for Hack Club's Sleepover event!)
 This is an hour by hour log of everything I worked on and when each feature was implemented.
@@ -64,7 +104,12 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * Introduce positive gamification that rewards resilience rather than punishing users for breaking their streak
     * Designed a visual plant that evolves (from a Seed to a Mighty Tree) based purely on the *total* number of cravings resisted. If a user slips up their growth just pauses, rather than their whole plant dying
     * Created a calculator that scans the user's logs in real-time to match their resisted cravings against tiered thresholds + a smooth progress bar
-
+10. Updating the README and fixing stylistic issues
+    * Fixed the anchor breathing animation
+    * Clearly detailing each of the features and how New Leaf works
+    * Finalizing Sleepover submission, then decided against submitting to Sleepover just yet - I'd rather have the full web app working than submit a demo
+    * Set up Firebase console and one-time link authentication magic link
+    
 
 ---
 <div align="center">

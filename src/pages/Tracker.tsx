@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Wind, AlertCircle, CheckCircle2, X, Plus, Minus, ChevronLeft, ChevronRight, Clock, Activity, Square, Send, Eye, Hand, Ear, Sparkles } from "lucide-react";
+import { Wind, AlertCircle, CheckCircle2, X, Plus, Minus, ChevronLeft, ChevronRight, Clock, Activity, Square, Send, Eye, Hand, Ear, Sparkles, Info } from "lucide-react";
 import GrowthEngine from "../components/GrowthEngine";
 
 type LogEntry = {
@@ -112,6 +112,8 @@ export default function Tracker() {
 
 	const [worryText, setWorryText] = useState("");
 	const [bubbles, setBubbles] = useState<{ id: number, text: string }[]>([]);
+
+	const [showAbout, setShowAbout] = useState(false);
 
 	const [groundingStep, setGroundingStep] = useState(0);
 	const groundingPrompts = [
@@ -265,11 +267,11 @@ export default function Tracker() {
 	const calculateTotalResisted = () => {
 		let resisted = 0;
 		Object.values(historyData).forEach(day => {
-		day.logs.forEach(log => {
-			if (log.intensity !== null && log.vapes === 0) {
-			resisted += 1;
-			}
-		});
+			day.logs.forEach(log => {
+				if (log.intensity !== null && log.vapes === 0) {
+					resisted += 1;
+				}
+			});
 		});
 		return resisted;
 	};
@@ -518,7 +520,16 @@ export default function Tracker() {
 
 	return (
 		<div className="space-y-6 relative pb-20">
-			<div><h1 className="font-display text-3xl text-neutral-800">New Leaf</h1></div>
+			<div><h1 className="font-display text-3xl text-neutral-800">New Leaf</h1>
+
+				<button
+					onClick={() => setShowAbout(true)}
+					className="p-2 bg-white/80 backdrop-blur-md border border-neutral-200 rounded-full shadow-sm text-neutral-400 hover:text-neutral-800 transition-colors z-30"
+				>
+					<Info size={20} />
+				</button>
+
+			</div>
 
 			<GrowthEngine totalResisted={totalResisted} />
 
@@ -693,6 +704,35 @@ export default function Tracker() {
 								{isLogged ? (<><CheckCircle2 size={20} /> Saved successfully</>) : ("Save log")}
 							</button>
 						</div>
+					</div>
+				</div>
+			)}
+
+			{showAbout && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/20 backdrop-blur-sm animate-in fade-in duration-200">
+					<div className="bg-white/95 backdrop-blur-xl rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-in zoom-in-95 duration-200 border border-neutral-100">
+						<div className="flex justify-between items-center mb-6">
+							<h3 className="font-display text-2xl text-neutral-800">About this project</h3>
+							<button onClick={() => setShowAbout(false)} className="p-2 bg-neutral-100 rounded-full text-neutral-500 hover:text-neutral-800 transition-colors">
+								<X size={16} />
+							</button>
+						</div>
+
+						<div className="space-y-4 text-xs text-neutral-700 leading-relaxed mb-8">
+							<p>
+								New Leaf was developed as a submission for my high school's TUPE (Tobacco-Use Prevention Education) initiative, where students were encouraged to create an app/website that addresses the issue of teen tobacco/vape use.
+							</p>
+							<p>
+								As a student, I noticed that traditional quitting apps rely heavily on streak counters. When a user slips up, the counter resets to zero, which induces shame. This is ineffective because it lacks empathy for the fact that addiction is a neurobiological condition. The shame from breaking a streak can lead to feelings of hopelessness, which is counterproductive to recovery.
+							</p>
+							<p>
+								I built this application to provide a more compassionate alternative to existing solutions. Instead of focusing on streaks, it emphasizes reflection, allowing users to track their cravings and triggers without judgment. The goal is to empower users to understand their patterns and progress in a postive way.
+							</p>
+						</div>
+
+						<button onClick={() => setShowAbout(false)} className="w-full py-3 bg-neutral-900 text-white rounded-xl font-medium shadow-md active:scale-95 transition-transform">
+							Close
+						</button>
 					</div>
 				</div>
 			)}
