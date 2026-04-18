@@ -224,7 +224,7 @@ export default function Education() {
 				<div>
 					<h4 className="text-sm font-bold text-yellow-900 uppercase tracking-wider mb-1">Demo Placeholder</h4>
 					<p className="text-xs text-yellow-800/90 leading-relaxed font-medium">
-						The articles below are placeholders for demonstration. In a production environment, this space will feature peer-reviewed resources written by addiction specialists. <strong>This is not medical advice.</strong>
+						The articles below are placeholders for this demo. In the actual, published environment, this space will feature peer-reviewed resources written by addiction specialists. <strong>This is not medical advice.</strong>
 					</p>
 				</div>
 			</div>

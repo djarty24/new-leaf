@@ -51,6 +51,15 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * Medical disclaimer (specifically for HHS TUPE)
     * Switched from manual Markdown rendering to automatically overriding Tailwind styles
     * Added 5 educationa articles on a variety of health-related topics
+8. Added a variety of calming exercises to help users through moments of high stress
+    * Upgraded the "I need help right now" button from a single breathing timer into a full toolkit with five different calming options
+        1. 424 breathing animation - this was the default and I just kept it the same
+        2. Box breathing exercise
+        3. An option to write down your worries and let them go by watching them float off screen
+        4. 5 senses exercise for grounding
+        5. A 10 second Anchor holding exercise
+    * Added the ability to easily restart and repeat exercises
+    * Improved the design so the toolkit fits on mobile phones and computer screens without stretching
 
 
 ---
