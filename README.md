@@ -60,6 +60,10 @@ This is an hour by hour log of everything I worked on and when each feature was 
         5. A 10 second Anchor holding exercise
     * Added the ability to easily restart and repeat exercises
     * Improved the design so the toolkit fits on mobile phones and computer screens without stretching
+9. [WIP] Creating a growth tree!
+    * Introduce positive gamification that rewards resilience rather than punishing users for breaking their streak
+    * Designed a visual plant that evolves (from a Seed to a Mighty Tree) based purely on the *total* number of cravings resisted. If a user slips up their growth just pauses, rather than their whole plant dying
+    * Created a calculator that scans the user's logs in real-time to match their resisted cravings against tiered thresholds + a smooth progress bar
 
 
 ---

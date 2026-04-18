@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Wind, AlertCircle, CheckCircle2, X, Plus, Minus, ChevronLeft, ChevronRight, Clock, Activity, Square, Send, Eye, Hand, Ear, Sparkles } from "lucide-react";
+import GrowthEngine from "../components/GrowthEngine";
 
 type LogEntry = {
 	id: string;
@@ -260,6 +261,21 @@ export default function Tracker() {
 	const selectedDayStats = historyData[selectedDateKey] || { cravings: 0, vapes: 0, logs: [] };
 	const isTodaySelected = formatDateKey(realToday) === selectedDateKey;
 
+	// Calculate Total Cravings Resisted (cravings logged, but 0 vapes)
+	const calculateTotalResisted = () => {
+		let resisted = 0;
+		Object.values(historyData).forEach(day => {
+		day.logs.forEach(log => {
+			if (log.intensity !== null && log.vapes === 0) {
+			resisted += 1;
+			}
+		});
+		});
+		return resisted;
+	};
+
+	const totalResisted = calculateTotalResisted();
+
 	if (isSurging) {
 		const renderSurgeContent = () => {
 			if (activeSurgeTab === "424") {
@@ -456,7 +472,6 @@ export default function Tracker() {
 
 		return (
 			<div className="fixed inset-0 z-50 bg-neutral-50 overflow-y-auto animate-in slide-in-from-bottom-full duration-300">
-				{/* ADDED: pb-32 to push content completely above the global Layout navbar */}
 				<div className="max-w-md mx-auto min-h-[100dvh] flex flex-col justify-between pt-8 pb-32 px-4 relative">
 
 					<div className="flex justify-between items-center mb-4 shrink-0">
@@ -504,6 +519,8 @@ export default function Tracker() {
 	return (
 		<div className="space-y-6 relative pb-20">
 			<div><h1 className="font-display text-3xl text-neutral-800">New Leaf</h1></div>
+
+			<GrowthEngine totalResisted={totalResisted} />
 
 			<button onClick={() => setIsSurging(true)} className="w-full bg-white/60 backdrop-blur-md border border-app-pink/30 rounded-2xl p-4 flex items-center justify-between shadow-sm transition-all active:scale-95 hover:bg-white/80">
 				<div className="flex items-center gap-3">
