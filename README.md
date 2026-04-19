@@ -109,6 +109,12 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * Clearly detailing each of the features and how New Leaf works
     * Finalizing Sleepover submission, then decided against submitting to Sleepover just yet - I'd rather have the full web app working than submit a demo
     * Set up Firebase console and one-time link authentication magic link
+11. Transitioned from local storage to a live Firebase backend
+    * Migrated the Journal and Craving Tracker from local state to Firebase Firestore
+    * Real users get cloud syncing, while reviewers/guests are served pre-loaded demo data just for testing
+    * Resolved a bug where past-dated logs were being overwritten with current timestamps
+    * Configured Firestore Security Rules
+    * Implemented Magic Link auth for secure sign in
     
 
 ---
