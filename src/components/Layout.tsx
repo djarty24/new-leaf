@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { auth } from "../lib/firebase";
-// Change 'User' to 'type User' here:
-import { onAuthStateChanged, signOut, type User } from "firebase/auth"; 
-import { Wind, BookOpen, MessageSquare, GraduationCap, User as UserIcon, LogOut } from "lucide-react";
+import { onAuthStateChanged, signOut, type User } from "firebase/auth";
+import { Wind, BookOpen, MessageSquare, GraduationCap, User as UserIcon, LogOut, Loader2 } from "lucide-react";
 import AuthModal from "./AuthModal";
 
 export default function Layout() {
   const location = useLocation();
   const [user, setUser] = useState<User | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
@@ -16,6 +16,7 @@ export default function Layout() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
+      setIsAuthLoading(false); // Tell the app Firebase is done checking
     });
     return () => unsubscribe();
   }, []);
@@ -31,6 +32,15 @@ export default function Layout() {
     signOut(auth);
     setShowUserMenu(false);
   };
+
+  // If Firebase is still thinking, show a clean loading screen
+  if (isAuthLoading) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <Loader2 className="animate-spin text-neutral-400" size={32} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-neutral-50 font-sans text-neutral-900 pb-24">

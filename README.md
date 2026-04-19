@@ -65,8 +65,8 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * Added a responsive bottom navigation bar for the `Layout.tsx` wrapper
     * Setting up ShadCN was a challenge due to the imports not going through
         - I encountered a dependency error in to invalid JSX comment placement; resolved by restructuring the DOM nodes
-        - Shadcn CLI failed to locate the `@/*` path alias. Modern Vite setups split TypeScript configuration across multiple files (`tsconfig.app.json` and `tsconfig.json`)
-        - Fixed the alias issue took a long time to pinpoint and resolve but eventually, by explicitly defining `baseUrl: "."` and the `paths` object in the root `tsconfig.json` the imports went through!
+        - Shadcn CLI failed to locate the `@/*` path alias. Modern Vite setups split TypeScript configuration across multiple files
+        - Fixing the alias issue took a long time to pinpoint and resolve but eventually, by explicitly defining `baseUrl: "."` and the `paths` object in the root `tsconfig.json` the imports went through!
     * Selected a color palette and added that to styles(WIP)
 3. Worked on the cravings tracker page
     * Created a calendar to show a summary of past logs. The colored rings indicate the intensity of cravings and the number of times the user vaped
@@ -94,7 +94,7 @@ This is an hour by hour log of everything I worked on and when each feature was 
 8. Added a variety of calming exercises to help users through moments of high stress
     * Upgraded the "I need help right now" button from a single breathing timer into a full toolkit with five different calming options
         1. 424 breathing animation - this was the default and I just kept it the same
-        2. Box breathing exercise
+        2. Box breathing exercises
         3. An option to write down your worries and let them go by watching them float off screen
         4. 5 senses exercise for grounding
         5. A 10 second Anchor holding exercise
@@ -115,7 +115,11 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * Resolved a bug where past-dated logs were being overwritten with current timestamps
     * Configured Firestore Security Rules
     * Implemented Magic Link auth for secure sign in
-    
+12. Fixed Firebase and code cleanup
+    * Added Google sign in due to free-tier email quotas for Magic Link
+    * Fixed a race condition to keep users logged in after
+    * For the community tab I hooked the community feed to Firestore and made it completely anonymous
+    * The app is pretty much ready to deploy at this point - all that's left is updating README and deploying on Vercel and designing a logo!
 
 ---
 <div align="center">

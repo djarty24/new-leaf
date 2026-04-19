@@ -4,7 +4,6 @@ import GrowthEngine from "../components/GrowthEngine";
 import { auth, db } from "../lib/firebase";
 import { collection, addDoc, query, where, onSnapshot, serverTimestamp, Timestamp } from "firebase/firestore";
 
-// --- Types ---
 type LogEntry = {
 	id: string;
 	timestamp: Date;
@@ -23,7 +22,6 @@ const formatDateKey = (date: Date) => {
 	return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 };
 
-// --- Options ---
 const contextOptions = [
 	{ id: "stressed", label: "Stressed", activeClass: "bg-app-purple/10 border-app-purple text-purple-900" },
 	{ id: "anxious", label: "Anxious", activeClass: "bg-app-pink/10 border-app-pink text-pink-900" },
@@ -103,7 +101,6 @@ export default function Tracker() {
 	const [isLogging, setIsLogging] = useState(false);
 	const [showAbout, setShowAbout] = useState(false);
 
-	// App State
 	const [historyData, setHistoryData] = useState<Record<string, DayData>>({});
 	const [cravingLevel, setCravingLevel] = useState<string | null>(null);
 	const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -111,23 +108,19 @@ export default function Tracker() {
 	const [isLogged, setIsLogged] = useState(false);
 	const [isSaving, setIsSaving] = useState(false);
 
-	// Date State
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [viewMonth, setViewMonth] = useState(new Date());
 	const [popupDate, setPopupDate] = useState<Date | null>(null);
 	const [viewingTimelineDate, setViewingTimelineDate] = useState<Date | null>(null);
 
-	// --- Hybrid Database Logic ---
 	useEffect(() => {
 		if (user) {
-			// 1. REAL USER: Fetch flat logs from Firestore
 			const q = query(
 				collection(db, "cravings"),
 				where("userId", "==", user.uid)
 			);
 
 			const unsubscribe = onSnapshot(q, (snapshot) => {
-				// 2. Reconstruct the Record<string, DayData> dictionary
 				const rebuiltData: Record<string, DayData> = {};
 
 				snapshot.docs.forEach(doc => {
@@ -150,7 +143,6 @@ export default function Tracker() {
 					});
 				});
 
-				// 3. Sort logs inside each day chronologically
 				Object.keys(rebuiltData).forEach(key => {
 					rebuiltData[key].logs.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
 				});
@@ -160,12 +152,10 @@ export default function Tracker() {
 
 			return () => unsubscribe();
 		} else {
-			// GUEST MODE: Fallback to mock data
 			setHistoryData(generateInitialHistory());
 		}
 	}, [user]);
 
-	// --- SURGE STATE (Breathing, Bubbles, Anchor) ---
 	const [breathePhase, setBreathePhase] = useState<"start" | "inhale" | "hold1" | "exhale" | "hold2">("start");
 	const [timeLeft, setTimeLeft] = useState(3);
 	const [worryText, setWorryText] = useState("");
@@ -186,7 +176,6 @@ export default function Tracker() {
 	realToday.setHours(0, 0, 0, 0);
 	const isViewingCurrentMonth = viewMonth.getFullYear() === realToday.getFullYear() && viewMonth.getMonth() === realToday.getMonth();
 
-	// Calculate Total Resisted for Growth Engine
 	const calculateTotalResisted = () => {
 		let resisted = 0;
 		Object.values(historyData).forEach(day => {
@@ -198,7 +187,6 @@ export default function Tracker() {
 	};
 	const totalResisted = calculateTotalResisted();
 
-	// --- SURGE LOGIC ---
 	useEffect(() => {
 		if (!isSurging || (activeSurgeTab !== "424" && activeSurgeTab !== "box")) return;
 		let tick = 0;
@@ -258,31 +246,25 @@ export default function Tracker() {
 		setIsSurging(false); setActiveSurgeTab("424"); setHoldProgress(0);
 	};
 
-	// --- TRACKER LOGIC ---
 	const toggleTag = (tag: string) => setSelectedTags(prev => prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]);
 
 	const handleLog = async () => {
 		setIsSaving(true);
 
-		// Figure out if they are logging for today or a past day
 		const dateKey = formatDateKey(selectedDate);
 		const isToday = formatDateKey(new Date()) === dateKey;
 
-		// If today, use exact time. If a past day, set it to 12:00 PM of that day.
 		const logTimestamp = isToday ? new Date() : new Date(selectedDate.setHours(12, 0, 0, 0));
 
 		if (user) {
-			// CLOUD WRITE
 			await addDoc(collection(db, "cravings"), {
 				userId: user.uid,
-				timestamp: logTimestamp, // Fixed: Using our calculated date instead of serverTimestamp()
+				timestamp: logTimestamp,
 				intensity: cravingLevel,
 				tags: selectedTags,
 				vapes: vapeCount
 			});
-			// (The onSnapshot listener will automatically update the UI data)
 		} else {
-			// LOCAL DEMO WRITE
 			const existingData = historyData[dateKey] || { cravings: 0, vapes: 0, logs: [] };
 			const newCravingIncrement = cravingLevel ? 1 : 0;
 			const newLog: LogEntry = {
@@ -341,7 +323,6 @@ export default function Tracker() {
 	const selectedDayStats = historyData[selectedDateKey] || { cravings: 0, vapes: 0, logs: [] };
 	const isTodaySelected = formatDateKey(realToday) === selectedDateKey;
 
-	// --- RENDER SURGE INTERVENTION MODAL ---
 	if (isSurging) {
 		const renderSurgeContent = () => {
 			if (activeSurgeTab === "424" || activeSurgeTab === "box") {
@@ -476,7 +457,6 @@ export default function Tracker() {
 		);
 	}
 
-	// --- RENDER STANDARD TRACKER VIEW ---
 	return (
 		<div className="space-y-6 relative pb-20">
 			<div className="flex justify-between items-center">
@@ -649,10 +629,10 @@ export default function Tracker() {
 							<h3 className="font-display text-2xl text-neutral-800">About this project</h3>
 							<button onClick={() => setShowAbout(false)} className="p-2 bg-neutral-100 rounded-full text-neutral-500 hover:text-neutral-800 transition-colors"><X size={16} /></button>
 						</div>
-						<div className="space-y-4 text-sm text-neutral-700 leading-relaxed mb-8">
-							<p><strong>New Leaf</strong> was developed as a submission for <span className="font-medium text-app-purple">Hack Club's Sleepover</span> and my school's <span className="font-medium text-teal-700">TUPE (Tobacco-Use Prevention Education)</span> project.</p>
-							<p>As a student developer, I noticed that traditional cessation apps rely heavily on streak counters. When a user slips up, the counter resets to zero, which induces shame and often triggers a complete relapse.</p>
-							<p>I built this application to provide a more compassionate alternative. By utilizing clinical CBT exercises, shame-free growth milestones, and an anonymous peer-support network, New Leaf treats addiction as a neurobiological challenge rather than a moral failure.</p>
+						<div className="space-y-4 text-xs text-neutral-700 leading-relaxed mb-8">
+							<p>New Leaf was developed as a project for my high school's TUPE (Tobacco-Use Prevention Education) initiative, where students were encouraged to create an app/website that addresses the issue of teen tobacco/vape use.</p>
+							<p>As a student, I noticed that traditional quitting apps rely heavily on streak counters. When a user slips up, the counter resets to zero, which induces shame. This is ineffective because it lacks empathy for the fact that addiction is a neurobiological condition. The shame from breaking a streak can lead to feelings of hopelessness, which is counterproductive to recovery.</p>
+							<p>I built this application to provide a more compassionate alternative to existing solutions. Instead of focusing on streaks, it emphasizes reflection, allowing users to track their cravings and triggers without judgment. The goal is to empower users to understand their patterns and progress in a postive way.</p>
 						</div>
 						<button onClick={() => setShowAbout(false)} className="w-full py-3 bg-neutral-900 text-white rounded-xl font-medium shadow-md active:scale-95 transition-transform">Close</button>
 					</div>
