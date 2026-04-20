@@ -144,6 +144,7 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * The app is pretty much ready to deploy at this point - all that's left is updating README and deploying on Vercel and designing a logo!
 13. Final touches
     * Finalized and updated the README
+    * Added custom logo design to favicon
     * Deployed on Vercel
     * Shipped to Sleepover!
 
