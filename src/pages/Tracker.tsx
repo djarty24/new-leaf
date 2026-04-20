@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Wind, AlertCircle, CheckCircle2, X, Plus, Minus, ChevronLeft, ChevronRight, Clock, Activity, Square, Send, Eye, Hand, Ear, Sparkles, Info } from "lucide-react";
 import GrowthEngine from "../components/GrowthEngine";
 import { auth, db } from "../lib/firebase";
-import { collection, addDoc, query, where, onSnapshot, serverTimestamp, Timestamp } from "firebase/firestore";
+import { collection, addDoc, query, where, onSnapshot, Timestamp } from "firebase/firestore";
 
 type LogEntry = {
 	id: string;
