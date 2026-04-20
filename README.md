@@ -4,8 +4,8 @@ A community-focused tracker and support space for teens navigating the process o
 
 ## Features
 **Daily Tracker and Calendar**
-* Log specific cravings, including intensity and situational triggers.
-* View daily patterns and craving frequency on a color-coded visual calendar.
+* Log specific cravings, including the intensity of a trigger and the situtation where it occurs
+* View daily patterns and craving frequency on a color-coded visual calendar
 
 **Growth Engine**
 * Track overall recovery progress through a growing digital plant!
@@ -31,8 +31,30 @@ A community-focused tracker and support space for teens navigating the process o
     * Learn evidence-based coping strategies and habit replacement techniques
 
 ## Tech Stack
-
-React, vite, typescript, tailwindcss, shadcn, etc.
+A list of the toools used to build New Leaf:
+1. ReactJS
+    * This is the framework I used to build the entire UI
+    * Handles all interactive elements (ex: breathing exercises, calendar)
+2. Vite
+    * The build tool
+3. TypeScript
+    * A strict version of JavaScript that catches errors
+4. Tailwind CSS
+    * A styling library used to design and style the UI 
+    * Made it easy to ensure the app remains fully responsive on both mobile phones and desktop screens
+5. ShadCN
+    * A library of aesthetically pleasing React components
+    * Instead of building a full UI from absolute scratch, this provided a customizable library of preexisting UI elements
+6. React Router (version 6)
+    * Handles all of the navigation between different pages
+7. Firebase (& Firestore)
+    * The backend!
+    * Securly handles user logins (via Magic Links and Google Sign-In)
+    * Stores all user data in an **encrypted** live cloud database
+8. React-Markdown
+    * A specialized tool used for the articles library to render information in an easily understandable format
+9. Lucide React
+    * The icon library used for the UI
 
 ## Installation Guide
 Follow these steps to run the project locally on your machine.
@@ -120,6 +142,10 @@ This is an hour by hour log of everything I worked on and when each feature was 
     * Fixed a race condition to keep users logged in after
     * For the community tab I hooked the community feed to Firestore and made it completely anonymous
     * The app is pretty much ready to deploy at this point - all that's left is updating README and deploying on Vercel and designing a logo!
+13. Final touches
+    * Finalized and updated the README
+    * Deployed on Vercel
+    * Shipped to Sleepover!
 
 ---
 <div align="center">
