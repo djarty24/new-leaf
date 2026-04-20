@@ -174,7 +174,7 @@ export default function Forum() {
 				</div>
 				{!user && (
 					<div className="flex items-center gap-1 text-[10px] font-bold text-app-yellow uppercase tracking-widest bg-app-yellow/10 px-2 py-1 rounded-md border border-app-yellow/20">
-						<AlertCircle size={10} /> Demo Mode
+						<AlertCircle size={10} /> Demo Mode - if you don't want to sign up but still want to explore the app, you can use the demo mode!
 					</div>
 				)}
 			</div>
