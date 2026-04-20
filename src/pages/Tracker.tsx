@@ -464,7 +464,7 @@ export default function Tracker() {
 					<h1 className="font-display text-3xl text-neutral-800">New Leaf</h1>
 					{!user && (
 						<div className="flex items-center gap-1 text-[10px] font-bold text-app-yellow uppercase tracking-widest bg-app-yellow/10 px-2 py-1 rounded-md border border-app-yellow/20">
-							<AlertCircle size={10} /> Demo Mode
+							<AlertCircle size={10} /> Demo Mode - specifically for Sleepover project reviewers, you can use the demo mode to see the features of the app without signing up
 						</div>
 					)}
 				</div>

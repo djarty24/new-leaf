@@ -159,7 +159,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
 								className="w-full py-3 flex items-center justify-center gap-2 text-neutral-500 text-sm font-medium hover:text-neutral-900 transition-colors group"
 							>
 								<Zap size={16} className="text-app-yellow group-hover:fill-app-yellow transition-all" />
-								Continue as Guest
+								Continue as Guest - For Sleepover project reviewers, you can use the demo mode to see the features of the app without signing up
 							</button>
 						</div>
 					</div>
